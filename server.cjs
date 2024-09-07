@@ -4,7 +4,7 @@ require('dotenv').config()
 const { GoogleGenerativeAI } = require("@google/generative-ai");
 
 const app = express()
-const PORT = 8000
+const PORT = 'https://react-gemini-chatbot.vercel.app'
 
 app.use(cors())
 app.use(express.json())
