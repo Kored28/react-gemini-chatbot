@@ -30,7 +30,6 @@ function App() {
           message: value
         }),
         headers: {
-          "Access-Control-Allow-Origin": "no-cors",
           'Content-Type': 'application/json'
         }
       }
