@@ -1,0 +1,135 @@
+* {
+  font-family: sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --background-color: #fafafc;
+  --primary-text-color: #777;
+  --answer-text-color: #242424;
+  --input-button-text-color: #777;
+  --suprise-bg-color: #ececf1;
+  --suprise-txt-color: #000;
+  --secondary-bg-color: #fff;
+  --secondary-text-color: #cacaca;
+}
+
+[data-theme="dark"] {
+  --background-color: #000;
+  --primary-text-color: #eeeeee;
+  --secondary-text-color: #000;
+  --input-button-text-color: #000;
+  --secondary-bg-color: #9b9b9b;
+  --answer-text-color: #000;
+
+}
+
+
+p {
+  font-weight: 200;
+  font-size: 14px;
+}
+
+.app {
+  padding: 64px;
+  height: 100vh;
+  background-color: var(--background-color);
+  color: var(--primary-text-color);
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.search-result {
+  width: 100%;
+  margin-top: 10px;
+  overflow: scroll;
+  padding: 20px 5px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.suprise-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 5px;
+}
+
+.know{
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.suprise {
+  background-color: var(--suprise-bg-color);
+  color: var(--suprise-txt-color);
+  border-radius: 5px;
+  font-weight: 600;
+  padding: 6px 12px;
+  margin: 0px 0px 2px 5px;
+  border: none;
+  cursor: pointer;
+}
+
+.input-container {
+  display: flex;
+  width: 100%;
+  height: 70px;
+  border: 0.5px solid #cacaca;
+  box-sizing: border-box;
+  border-radius: 6px;
+  box-shadow: rgba(0, 0, 82, 0.15) 0 2px 4px;
+}
+
+.input-container input {
+  border: none;
+  padding: 13px 14px;
+  box-sizing: border-box;
+  font-size: 15px;
+  outline: none;
+  width: 100%;
+  height: auto;
+  font-weight: 200;
+}
+
+.input-container input::placeholder {
+  color: var(--secondary-text-color);
+  font-weight: 200;
+}
+
+.input-container button {
+  min-width: 10%;
+  border: none;
+  border-left: 1px solid #cacaca;
+  background-color: var(--secondary-bg-color);
+  color: var(--input-button-text-color);
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.input-container button:active {
+  background-color: #cacaca;
+}
+
+.error{
+  color: red;
+  font-size: 15px;
+}
+
+.answer{
+  padding: 13px 14px;
+  border: 0.5px solid #cacaca;
+  background-color: var(--secondary-bg-color);
+  color: var(--answer-text-color);
+  margin: 5px;
+  font-size: 15px;
+  font-weight: 200;
+  border-radius: 6px;
+  display: flex;
+  gap: 10px;
+}
