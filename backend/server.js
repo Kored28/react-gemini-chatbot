@@ -4,7 +4,6 @@ require('dotenv').config()
 const { GoogleGenerativeAI } = require("@google/generative-ai");
 
 const app = express()
-const PORT = 8000
 
 app.use(cors())
 app.use(express.json())
@@ -15,7 +14,7 @@ app.post('/gemini', async (req, res) => {
     const model = genAI.getGenerativeModel({ model: "gemini-pro" })
 
     const chat = model.startChat({
-        history: req.body.history,
+        history: req.body.history, 
     })
 
     const msg = req.body.message 
@@ -26,4 +25,5 @@ app.post('/gemini', async (req, res) => {
     res.send(text)
 })
 
-app.listen(PORT, () => console.log(`listening to port ${PORT}`))
+app.listen(process.env.PORT, () => console.log(`listening to port ${process.env.PORT}`))
+ 

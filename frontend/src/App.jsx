@@ -34,7 +34,7 @@ function App() {
         }
       }
 
-      const response = await fetch("http://localhost:8000/gemini", options)
+      const response = await fetch(`${import.meta.env.VITE_REACT_APP_BE_URL}/gemini`, options)
 
       const data = await response.text()
       setChatHistory(oldHistory => [...oldHistory, {
