@@ -34,7 +34,7 @@ function App() {
         }
       }
 
-      const response = await fetch("https://react-gemini-chatbot.vercel.app/gemini", options)
+      const response = await fetch("http://localhost:8000/gemini", options)
 
       const data = await response.text()
       setChatHistory(oldHistory => [...oldHistory, {
