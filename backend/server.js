@@ -5,10 +5,20 @@ const { GoogleGenerativeAI } = require("@google/generative-ai");
 
 const app = express()
 
-app.use(cors())
+app.use(cors(
+    {
+        origin: [`${process.env.FRONTEND_URL}`],
+        methods: ["POST", "GET"],
+        credentials: true
+    }
+))
 app.use(express.json())
 
 const genAI = new GoogleGenerativeAI(process.env.GOOGLE_AI_KEY)
+
+app.get("/", (req, res) => {
+    res.json("It is working")
+})
 
 app.post('/gemini', async (req, res) => {
     const model = genAI.getGenerativeModel({ model: "gemini-pro" })
