@@ -39,7 +39,7 @@ function App() {
             throw new Error(`Server error: ${response.status} ${response.statusText}`);
         }
 
-        const data = await response.json(); // ✅ Expecting JSON response
+        const data = await response.json(); 
         if (!data.reply) {
             throw new Error("Invalid response from server.");
         }
