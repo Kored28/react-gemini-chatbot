@@ -1,17 +1,13 @@
 const express = require('express')
 const cors = require('cors')
 require('dotenv').config()
-const { GoogleGenerativeAI } = require("@google/generative-ai");
+const { GoogleGenAI  } = require("@google/genai");
+
+const { GoogleGenerativeAI } = require('@google/generative-ai');
 
 const app = express()
 
-app.use(cors(
-    {
-        origin: [`${process.env.FRONTEND_URL}`],
-        methods: ["POST", "GET"],
-        credentials: true
-    }
-))
+app.use(cors({ origin: "*", methods: "GET,POST", allowedHeaders: "Content-Type" }));
 app.use(express.json())
 
 const genAI = new GoogleGenerativeAI(process.env.GOOGLE_AI_KEY)
@@ -21,19 +17,31 @@ app.get("/", (req, res) => {
 })
 
 app.post('/gemini', async (req, res) => {
-    const model = genAI.getGenerativeModel({ model: "gemini-pro" })
+    try {
+        const model = genAI.getGenerativeModel({ model: "gemini-1.5-pro" });
 
-    const chat = model.startChat({
-        history: req.body.history, 
-    })
+        const chatHistory = req.body.history || [];
+        const userMessage = req.body.message;
 
-    const msg = req.body.message 
+        // Append the new user message to the chat history
+        chatHistory.push({ role: "user", parts: [{ text: userMessage }] });
 
-    const result = await chat.sendMessage(msg)
-    const response = await result.response
-    const text = await response.text()
-    res.send(text)
-})
+        const result = await model.generateContent({
+            contents: chatHistory
+        });
+
+        const response = await result.response;
+        const modelReply = response.candidates[0].content.parts[0].text;
+
+        // Append the model's reply to the chat history
+        chatHistory.push({ role: "model", parts: [{ text: modelReply }] });
+
+        res.json({ reply: modelReply, history: chatHistory });
+    } catch (error) {
+        console.error("Error processing request:", error);
+        res.status(500).json({ error: "Internal Server Error" });
+    }
+});
 
 app.listen(process.env.PORT, () => console.log(`listening to port ${process.env.PORT}`))
  

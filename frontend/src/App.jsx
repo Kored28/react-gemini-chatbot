@@ -17,42 +17,46 @@ function App() {
     setValue(randomvalue)
   }
 
-  const getResponse = async() => {
-    if(!value){
-      setError("Error! Please ask a question")
-      return
+  const getResponse = async () => {
+    if (!value) {
+        setError("Error! Please ask a question");
+        return;
     }
+
     try {
-      const options = {
-        method: 'POST',
-        body: JSON.stringify({
-          history: chatHistory,
-          message: value
-        }),
-        headers: {
-          'Content-Type': 'application/json'
+        const options = {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                history: chatHistory,
+                message: value,
+            }),
+        };
+
+        const response = await fetch(`${import.meta.env.VITE_REACT_APP_BE_URL}/gemini`, options);
+
+        if (!response.ok) {
+            throw new Error(`Server error: ${response.status} ${response.statusText}`);
         }
-      }
 
-      const response = await fetch(`${import.meta.env.VITE_REACT_APP_BE_URL}/gemini`, options)
+        const data = await response.json(); // ✅ Expecting JSON response
+        if (!data.reply) {
+            throw new Error("Invalid response from server.");
+        }
 
-      const data = await response.text()
-      setChatHistory(oldHistory => [...oldHistory, {
-        role: "user",
-        parts: [{ text: value }]
-      },
-      {
-        role: "model",
-        parts: [{ text: data }]
-      }
-    ])
-    setValue("")
+        setChatHistory((oldHistory) => [
+            ...oldHistory,
+            { role: "user", parts: [{ text: value }] },
+            { role: "model", parts: [{ text: data.reply }] },
+        ]);
+        setValue("");
 
     } catch (error) {
-      console.error(error)
-      setError("Something went wrong! Please try again later.")
+        console.error("Fetch error:", error);
+        setError("Something went wrong! Please try again later.");
     }
-  }
+};
+
 
   const clear = () => {
     setValue("")
