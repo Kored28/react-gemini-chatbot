@@ -21,7 +21,7 @@ app.get("/", (req, res) => {
 })
 
 app.post('/gemini', async (req, res) => {
-    const model = genAI.getGenerativeModel({ model: "gemini-pro" })
+    const model = genAI.getGenerativeModel({ model: "gemini-1.5-pro" })
 
     const chat = model.startChat({
         history: req.body.history, 
