@@ -5,14 +5,12 @@ const { GoogleGenerativeAI } = require("@google/generative-ai");
 
 const app = express()
 
-app.use(cors(
-    {
-        origin: [`${process.env.FRONTEND_URL}`],
-        methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
-        allowedHeaders: 'Content-Type, Authorization',
-        credentials: true
-    }
-))
+app.use(cors({
+  origin: process.env.FRONTEND_URL, // Ensure this is correctly set
+  methods: ['GET', 'HEAD', 'PUT', 'PATCH', 'POST', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  credentials: true
+}));
 app.use(express.json())
 app.options('*', cors());
 
