@@ -9,6 +9,7 @@ const app = express()
 
 app.use(cors({ origin: "*", methods: "GET,POST", allowedHeaders: "Content-Type" }));
 app.use(express.json())
+app.options('*', cors());
 
 const genAI = new GoogleGenerativeAI(process.env.GOOGLE_AI_KEY)
 
